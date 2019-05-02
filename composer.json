@@ -16,8 +16,7 @@
         "ext-bcmath": "*"
     },
     "require-dev": {
-        "blastcloud/guzzler": "^1.4",
-        "orchestra/testbench": "^3.8"
+        "blastcloud/guzzler": "^1.4"
     },
     "autoload": {
         "psr-4": {
