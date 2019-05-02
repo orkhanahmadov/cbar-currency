@@ -4,6 +4,7 @@ namespace Orkhanahmadov\CBARCurrency;
 
 use GuzzleHttp\Client;
 use Orkhanahmadov\CBARCurrency\Exceptions\CurrencyException;
+use Orkhanahmadov\CBARCurrency\Exceptions\DateException;
 
 class CBAR
 {
@@ -27,34 +28,42 @@ class CBAR
     /**
      * Parser constructor.
      * @param string|null $date
+     * @throws DateException
      */
     public function __construct(?string $date = null)
     {
-        // todo: validate date
-        $this->date = $date;
         $this->client = new Client();
+        $this->date = date('d.m.Y');
+
+        if ($date) {
+            $this->setDate($date);
+        }
     }
 
+    /**
+     * @param string $date
+     * @return $this
+     * @throws DateException
+     */
     public function for(string $date)
     {
-        // todo: validate date
-        $this->date = $date;
+        $this->setDate($date);
 
-        if (!isset($this->rates[$date])) {
-            $this->getRatesFromCBAR($date);
+        if (!isset($this->rates[$this->date])) {
+            $this->getRatesFromCBAR();
         }
 
         return $this;
     }
 
-    private function getRatesFromCBAR(string $date)
+    private function getRatesFromCBAR()
     {
-        $response = $this->client->get('https://www.cbar.az/currencies/'.$date.'.xml');
+        $response = $this->client->get('https://www.cbar.az/currencies/'.$this->date.'.xml');
 
         $xml = simplexml_load_string($response->getBody()->getContents());
 
         foreach ($xml->ValType[1]->Valute as $currency) {
-            $this->rates[$date][(string) $currency->attributes()['Code']] = [
+            $this->rates[$this->date][(string) $currency->attributes()['Code']] = [
                 'rate' => (float) $currency->Value,
                 'nominal' => (int) $currency->Nominal
             ];
@@ -68,7 +77,9 @@ class CBAR
      */
     public function __get(string $currency)
     {
-        // todo: validate if date is available. if not, fetch new
+        if (!isset($this->rates[$this->date])) {
+            $this->getRatesFromCBAR();
+        }
 
         if (!isset($this->rates[$this->date][$currency])) {
             throw new CurrencyException('Currency with '.$currency.' code is not available');
@@ -133,5 +144,18 @@ class CBAR
     public function getRates(): array
     {
         return $this->rates;
+    }
+
+    /**
+     * @param string $date
+     * @throws DateException
+     */
+    public function setDate(string $date): void
+    {
+        if (!$validatedDate = strtotime($date)) {
+            throw new DateException($date.' is not a valid date.');
+        }
+
+        $this->date = date('d.m.Y', $validatedDate);
     }
 }

@@ -6,52 +6,74 @@ use BlastCloud\Guzzler\UsesGuzzler;
 use GuzzleHttp\Psr7\Response;
 use Orkhanahmadov\CBARCurrency\Exceptions\CurrencyException;
 use Orkhanahmadov\CBARCurrency\CBAR;
+use Orkhanahmadov\CBARCurrency\Exceptions\DateException;
 use Orkhanahmadov\CBARCurrency\Tests\TestCase;
 
 class CBARTest extends TestCase
 {
     use UsesGuzzler;
 
-    /**
-     * @var CBAR
-     */
-    private $cbar;
-
-    protected function setUp(): void
+    public function invalidDates()
     {
-        parent::setUp();
-
-        $this->cbar = new CBAR();
-        $this->cbar->setClient($this->guzzler->getClient());
+        return [
+            ['40.10.2019'],
+            ['15.20.2019'],
+            ['abc'],
+            ['111']
+        ];
     }
 
-//    public function test_throws_exception_when_invalid_date_is_given()
-//    {
-//        $cbar = new CBAR('40.10.2019');
-//    }
+    /**
+     * @dataProvider invalidDates
+     * @throws DateException
+     */
+    public function test_initializing_class_with_invalid_date_throws_exception($date)
+    {
+        $this->expectException(DateException::class);
+        $this->expectExceptionMessage($date.' is not a valid date.');
+
+        new CBAR($date);
+    }
+
+    /**
+     * @dataProvider invalidDates
+     * @throws DateException
+     */
+    public function test_passing_invalid_date_to_for_method_throws_exception($date)
+    {
+        $this->expectException(DateException::class);
+        $this->expectExceptionMessage($date.' is not a valid date.');
+
+        $cbar = new CBAR();
+        $cbar->for($date);
+    }
 
     public function test_for_sets_currencies_from_cbar()
     {
+        $cbar = new CBAR();
+        $cbar->setClient($this->guzzler->getClient());
         $this->guzzler
             ->expects($this->once())
             ->get('https://www.cbar.az/currencies/01.05.2019.xml')
             ->willRespond(new Response(200, [], file_get_contents(__DIR__.'/../dummy_response.xml')));
-        $this->assertEmpty($this->cbar->getRates());
+        $this->assertEmpty($cbar->getRates());
 
-        $this->cbar->for('01.05.2019');
+        $cbar->for('01.05.2019');
 
-        $this->assertNotEmpty($this->cbar->getRates());
+        $this->assertNotEmpty($cbar->getRates());
     }
 
     public function test_guzzle_will_not_fetch_cbar_api_if_rates_for_given_date_are_already_available()
     {
+        $cbar = new CBAR();
+        $cbar->setClient($this->guzzler->getClient());
         $this->guzzler
             ->expects($this->once())
             ->get('https://www.cbar.az/currencies/01.05.2019.xml')
             ->willRespond(new Response(200, [], file_get_contents(__DIR__.'/../dummy_response.xml')));
 
-        $this->cbar->for('01.05.2019');
-        $this->cbar->for('01.05.2019');
+        $cbar->for('01.05.2019');
+        $cbar->for('01.05.2019');
     }
 
     public function test_magic_get_method_returns_currency_rate()
@@ -73,7 +95,7 @@ class CBARTest extends TestCase
     {
         $this->expectException(CurrencyException::class);
         $this->expectExceptionMessage('Currency with EUR code is not available');
-        $cbar = new CBAR();
+        $cbar = new CBAR('01.05.2019');
         $cbar->setRates([
             '01.05.2019' => [
                 'USD' => [
@@ -84,6 +106,21 @@ class CBARTest extends TestCase
         ]);
 
         $cbar->EUR;
+    }
+
+    public function test_method_get_method_get_rates_from_cbar_if_rates_for_given_date_is_not_available()
+    {
+        $cbar = new CBAR();
+        $cbar->setClient($this->guzzler->getClient());
+        $this->guzzler
+            ->expects($this->once())
+            ->get('https://www.cbar.az/currencies/'.date('d.m.Y').'.xml')
+            ->willRespond(new Response(200, [], file_get_contents(__DIR__.'/../dummy_response.xml')));
+        $this->assertEmpty($cbar->getRates());
+
+        $cbar->USD;
+
+        $this->assertNotEmpty($cbar->getRates());
     }
 
     public function test_magic_set_method_returns_calculated_amount()
