@@ -119,8 +119,6 @@ class CBARTest extends TestCase
         $this->assertEmpty($cbar->getRates());
 
         $cbar->USD;
-
-        $this->assertNotEmpty($cbar->getRates());
     }
 
     public function test_magic_set_method_returns_calculated_amount()
@@ -142,7 +140,7 @@ class CBARTest extends TestCase
     {
         $this->expectException(CurrencyException::class);
         $this->expectExceptionMessage('Currency with EUR code is not available');
-        $cbar = new CBAR();
+        $cbar = new CBAR('01.05.2019');
         $cbar->setRates([
             '01.05.2019' => [
                 'USD' => [
@@ -153,6 +151,19 @@ class CBARTest extends TestCase
         ]);
 
         $cbar->EUR(100);
+    }
+
+    public function test_method_set_method_get_rates_from_cbar_if_rates_for_given_date_is_not_available()
+    {
+        $cbar = new CBAR();
+        $cbar->setClient($this->guzzler->getClient());
+        $this->guzzler
+            ->expects($this->once())
+            ->get('https://www.cbar.az/currencies/'.date('d.m.Y').'.xml')
+            ->willRespond(new Response(200, [], file_get_contents(__DIR__.'/../dummy_response.xml')));
+        $this->assertEmpty($cbar->getRates());
+
+        $cbar->USD(100);
     }
 
     public function test_azn_method_returns_azn_to_other_currency_conversion_with_given_amount()
