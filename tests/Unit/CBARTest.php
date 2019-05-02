@@ -4,8 +4,8 @@ namespace Orkhanahmadov\CBARCurrency\Tests\Unit;
 
 use BlastCloud\Guzzler\UsesGuzzler;
 use GuzzleHttp\Psr7\Response;
-use Orkhanahmadov\CBARCurrency\Exceptions\CurrencyException;
 use Orkhanahmadov\CBARCurrency\CBAR;
+use Orkhanahmadov\CBARCurrency\Exceptions\CurrencyException;
 use Orkhanahmadov\CBARCurrency\Exceptions\DateException;
 use Orkhanahmadov\CBARCurrency\Tests\TestCase;
 
@@ -19,12 +19,13 @@ class CBARTest extends TestCase
             ['40.10.2019'],
             ['15.20.2019'],
             ['abc'],
-            ['111']
+            ['111'],
         ];
     }
 
     /**
      * @dataProvider invalidDates
+     *
      * @throws DateException
      */
     public function test_initializing_class_with_invalid_date_throws_exception($date)
@@ -37,6 +38,7 @@ class CBARTest extends TestCase
 
     /**
      * @dataProvider invalidDates
+     *
      * @throws DateException
      */
     public function test_passing_invalid_date_to_for_method_throws_exception($date)
@@ -83,9 +85,9 @@ class CBARTest extends TestCase
             '01.05.2019' => [
                 'USD' => [
                     'nominal' => 1,
-                    'rate' => 1.7053
-                ]
-            ]
+                    'rate'    => 1.7053,
+                ],
+            ],
         ]);
 
         $this->assertEquals(1.7053, $cbar->USD);
@@ -100,9 +102,9 @@ class CBARTest extends TestCase
             '01.05.2019' => [
                 'USD' => [
                     'nominal' => 1,
-                    'rate' => 1.7053
-                ]
-            ]
+                    'rate'    => 1.7053,
+                ],
+            ],
         ]);
 
         $cbar->EUR;
@@ -128,9 +130,9 @@ class CBARTest extends TestCase
             '01.05.2019' => [
                 'USD' => [
                     'nominal' => 1,
-                    'rate' => 1.7053
-                ]
-            ]
+                    'rate'    => 1.7053,
+                ],
+            ],
         ]);
 
         $this->assertEquals(170.53, $cbar->USD(100));
@@ -145,9 +147,9 @@ class CBARTest extends TestCase
             '01.05.2019' => [
                 'USD' => [
                     'nominal' => 1,
-                    'rate' => 1.7053
-                ]
-            ]
+                    'rate'    => 1.7053,
+                ],
+            ],
         ]);
 
         $cbar->EUR(100);
@@ -173,9 +175,9 @@ class CBARTest extends TestCase
             '01.05.2019' => [
                 'EUR' => [
                     'nominal' => 1,
-                    'rate' => 2
-                ]
-            ]
+                    'rate'    => 2,
+                ],
+            ],
         ]);
 
         $this->assertEquals(0.5, $cbar->AZN()->EUR);

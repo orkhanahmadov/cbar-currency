@@ -16,9 +16,9 @@ class FunctionsTest extends TestCase
             '01.05.2019' => [
                 'EUR' => [
                     'nominal' => 1,
-                    'rate' => 2
-                ]
-            ]
+                    'rate'    => 2,
+                ],
+            ],
         ]);
         $this->assertInstanceOf(CBAR::class, $cbar);
         $this->assertEquals(2, $cbar->EUR);
