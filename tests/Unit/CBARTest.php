@@ -25,14 +25,6 @@ class CBARTest extends TestCase
         $this->cbar->setClient($this->guzzler->getClient());
     }
 
-//    public function test_experiment()
-//    {
-//        $cbar = new CBAR();
-//        $cbar->for('01.05.2019')->USD;
-//        $cbar->for('01.05.2019')->USD(100)->toAZN();
-//        $cbar->for('01.05.2019')->AZN(100)->toUSD();
-//    }
-
     public function test_for_sets_currencies_from_cbar()
     {
         $this->guzzler
@@ -80,5 +72,14 @@ class CBARTest extends TestCase
         $cbar->setCurrencies(['USD' => ['nominal' => 1, 'rate' => 1.7053]]);
 
         $cbar->EUR(100);
+    }
+
+    public function test_azn_method_returns_azn_to_other_currency_conversion_with_given_amount()
+    {
+        $cbar = new CBAR();
+        $cbar->setCurrencies(['EUR' => ['nominal' => 1, 'rate' => 2]]);
+
+        $this->assertEquals(0.5, $cbar->AZN()->EUR);
+        $this->assertEquals(5, $cbar->AZN(10)->EUR);
     }
 }

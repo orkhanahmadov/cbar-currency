@@ -15,6 +15,10 @@ class CBAR
      * @var array
      */
     private $currencies = [];
+    /**
+     * @var float|int|null
+     */
+    private $aznAmount = null;
 
     /**
      * Parser constructor.
@@ -51,13 +55,19 @@ class CBAR
             throw new CurrencyException('Currency with '.$currency.' code is not available');
         }
 
-        return bcdiv($this->currencies[$currency]['rate'], $this->currencies[$currency]['nominal'], 6);
+        if ($this->aznAmount) {
+            $conversion = bcdiv($this->aznAmount, $this->currencies[$currency]['rate'], 4);
+            $this->aznAmount = null;
+            return $conversion;
+        }
+
+        return bcdiv($this->currencies[$currency]['rate'], $this->currencies[$currency]['nominal'], 4);
     }
 
     /**
      * @param string $currency
      * @param array $arguments
-     * @return $this
+     * @return float|int
      * @throws CurrencyException
      */
     public function __call(string $currency, array $arguments)
@@ -67,6 +77,17 @@ class CBAR
         }
 
         return $this->$currency * $arguments[0];
+    }
+
+    /**
+     * @param float|int $amount
+     * @return CBAR
+     */
+    public function AZN($amount = 1)
+    {
+        $this->aznAmount = $amount;
+
+        return $this;
     }
 
     /**
