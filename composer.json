@@ -12,7 +12,8 @@
     "require": {
         "php": ">=7.2.0",
         "guzzlehttp/guzzle": "^6.3",
-        "ext-simplexml": "*"
+        "ext-simplexml": "*",
+        "ext-bcmath": "*"
     },
     "require-dev": {
         "blastcloud/guzzler": "^1.4",

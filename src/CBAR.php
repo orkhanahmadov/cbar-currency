@@ -24,7 +24,7 @@ class CBAR
         $this->client = new Client();
     }
 
-    public function rateFor(string $date)
+    public function for(string $date)
     {
         $response = $this->client->get('https://www.cbar.az/currencies/'.$date.'.xml');
 
@@ -47,15 +47,26 @@ class CBAR
      */
     public function __get(string $currency)
     {
-        if (isset($this->currencies[$currency])) {
-            return $this->currencies[$currency]['rate'] / $this->currencies[$currency]['nominal'];
+        if (!isset($this->currencies[$currency])) {
+            throw new CurrencyException('Currency with '.$currency.' code is not available');
         }
 
-//        if (isset($this->currencies[$currency])) {
-//            return new CBARCurrency($this->currencies[$currency]['rate'], $this->currencies[$currency]['nominal']);
-//        }
+        return bcdiv($this->currencies[$currency]['rate'], $this->currencies[$currency]['nominal'], 6);
+    }
 
-        throw new CurrencyException('Currency with '.$currency.' code is not available');
+    /**
+     * @param string $currency
+     * @param array $arguments
+     * @return $this
+     * @throws CurrencyException
+     */
+    public function __call(string $currency, array $arguments)
+    {
+        if (!isset($this->currencies[$currency])) {
+            throw new CurrencyException('Currency with '.$currency.' code is not available');
+        }
+
+        return $this->$currency * $arguments[0];
     }
 
     /**
@@ -67,18 +78,18 @@ class CBAR
     }
 
     /**
-     * @return array
-     */
-    public function getCurrencies(): array
-    {
-        return $this->currencies;
-    }
-
-    /**
      * @param array $currencies
      */
     public function setCurrencies(array $currencies): void
     {
         $this->currencies = $currencies;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCurrencies(): array
+    {
+        return $this->currencies;
     }
 }
