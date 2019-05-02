@@ -1,6 +1,6 @@
 <?php
 
-namespace Orkhanahmadov\CBARCurrencyParser\Tests;
+namespace Orkhanahmadov\CBARCurrency\Tests;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {

@@ -1,6 +1,6 @@
 {
-    "name": "orkhanahmadov/cbar-currency-parser",
-    "description": "CBAR.az currency parser library for PHP and Laravel framework",
+    "name": "orkhanahmadov/cbar-currency",
+    "description": "CBAR.az currency library for PHP and Laravel framework",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -11,7 +11,8 @@
     ],
     "require": {
         "php": ">=7.2.0",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "^6.3",
+        "ext-simplexml": "*"
     },
     "require-dev": {
         "blastcloud/guzzler": "^1.4",
@@ -19,12 +20,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Orkhanahmadov\\CBARCurrencyParser\\": "src/"
+            "Orkhanahmadov\\CBARCurrency\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Orkhanahmadov\\CBARCurrencyParser\\Tests\\": "tests/"
+            "Orkhanahmadov\\CBARCurrency\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "dev",
