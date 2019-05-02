@@ -120,7 +120,9 @@ class CBAR
 
     /**
      * Parser constructor.
+     *
      * @param string|null $date
+     *
      * @throws DateException
      */
     public function __construct(?string $date = null)
@@ -134,11 +136,13 @@ class CBAR
     }
 
     /**
-     * Sets currency rate date
+     * Sets currency rate date.
      *
      * @param string $date
-     * @return $this
+     *
      * @throws DateException
+     *
+     * @return $this
      */
     public function for(string $date)
     {
@@ -152,7 +156,7 @@ class CBAR
     }
 
     /**
-     * Fetches currency rates from CBAR with given date
+     * Fetches currency rates from CBAR with given date.
      */
     private function getRatesFromCBAR()
     {
@@ -162,18 +166,20 @@ class CBAR
 
         foreach ($xml->ValType[1]->Valute as $currency) {
             $this->rates[$this->date][(string) $currency->attributes()['Code']] = [
-                'rate' => (float) $currency->Value,
-                'nominal' => (int) $currency->Nominal
+                'rate'    => (float) $currency->Value,
+                'nominal' => (int) $currency->Nominal,
             ];
         }
     }
 
     /**
-     * Gets currency rate
+     * Gets currency rate.
      *
      * @param string $currency
-     * @return mixed
+     *
      * @throws CurrencyException
+     *
+     * @return mixed
      */
     public function __get(string $currency)
     {
@@ -188,6 +194,7 @@ class CBAR
         if ($this->aznAmount) {
             $conversion = bcdiv($this->aznAmount, $this->rates[$this->date][$currency]['rate'], 4);
             $this->aznAmount = null;
+
             return $conversion;
         }
 
@@ -195,12 +202,14 @@ class CBAR
     }
 
     /**
-     * Converts currency with given amount
+     * Converts currency with given amount.
      *
      * @param string $currency
-     * @param array $arguments
-     * @return float|int
+     * @param array  $arguments
+     *
      * @throws CurrencyException
+     *
+     * @return float|int
      */
     public function __call(string $currency, array $arguments)
     {
@@ -216,9 +225,10 @@ class CBAR
     }
 
     /**
-     * Converts AZN amount to other currency
+     * Converts AZN amount to other currency.
      *
      * @param float|int $amount
+     *
      * @return CBAR
      */
     public function AZN($amount = 1)
@@ -238,11 +248,13 @@ class CBAR
 
     /**
      * @param array $rates
+     *
      * @return CBAR
      */
-    public function setRates(array $rates): CBAR
+    public function setRates(array $rates): self
     {
         $this->rates = $rates;
+
         return $this;
     }
 
@@ -256,16 +268,19 @@ class CBAR
 
     /**
      * @param string $date
-     * @return CBAR
+     *
      * @throws DateException
+     *
+     * @return CBAR
      */
-    public function setDate(string $date): CBAR
+    public function setDate(string $date): self
     {
         if (!$validatedDate = strtotime($date)) {
             throw new DateException($date.' is not a valid date.');
         }
 
         $this->date = date('d.m.Y', $validatedDate);
+
         return $this;
     }
 }
