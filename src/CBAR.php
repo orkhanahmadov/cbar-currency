@@ -24,13 +24,13 @@ class CBAR
         $this->client = new Client();
     }
 
-    public function fetchCurrencies(string $date)
+    public function rateFor(string $date)
     {
         $response = $this->client->get('https://www.cbar.az/currencies/'.$date.'.xml');
 
-        $currencies = simplexml_load_string($response->getBody()->getContents());
+        $xml = simplexml_load_string($response->getBody()->getContents());
 
-        foreach ($currencies->ValType[1]->Valute as $currency) {
+        foreach ($xml->ValType[1]->Valute as $currency) {
             $this->currencies[(string) $currency->attributes()['Code']] = [
                 'rate' => (float) $currency->Value,
                 'nominal' => (int) $currency->Nominal
@@ -48,8 +48,12 @@ class CBAR
     public function __get(string $currency)
     {
         if (isset($this->currencies[$currency])) {
-            return $this->currencies[$currency];
+            return $this->currencies[$currency]['rate'] / $this->currencies[$currency]['nominal'];
         }
+
+//        if (isset($this->currencies[$currency])) {
+//            return new CBARCurrency($this->currencies[$currency]['rate'], $this->currencies[$currency]['nominal']);
+//        }
 
         throw new CurrencyException('Currency with '.$currency.' code is not available');
     }
@@ -63,12 +67,18 @@ class CBAR
     }
 
     /**
-     * @param array $currencies
-     * @return CBAR
+     * @return array
      */
-    public function setCurrencies(array $currencies): CBAR
+    public function getCurrencies(): array
+    {
+        return $this->currencies;
+    }
+
+    /**
+     * @param array $currencies
+     */
+    public function setCurrencies(array $currencies): void
     {
         $this->currencies = $currencies;
-        return $this;
     }
 }
