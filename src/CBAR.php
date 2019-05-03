@@ -122,17 +122,11 @@ class CBAR
      * Parser constructor.
      *
      * @param string|null $date
-     *
-     * @throws DateException
      */
     public function __construct(?string $date = null)
     {
         $this->client = new Client();
-        $this->date = date('d.m.Y');
-
-        if ($date) {
-            $this->setDate($date);
-        }
+        $this->date = $date ?: date('d.m.Y');
     }
 
     /**
@@ -140,13 +134,12 @@ class CBAR
      *
      * @param string $date
      *
-     * @throws DateException
-     *
      * @return $this
+     * @throws DateException
      */
     public function for(string $date)
     {
-        $this->setDate($date);
+        $this->date = $date;
 
         if (!isset($this->rates[$this->date])) {
             $this->getRatesFromCBAR();
@@ -156,30 +149,13 @@ class CBAR
     }
 
     /**
-     * Fetches currency rates from CBAR with given date.
-     */
-    private function getRatesFromCBAR()
-    {
-        $response = $this->client->get('https://www.cbar.az/currencies/'.$this->date.'.xml');
-
-        $xml = simplexml_load_string($response->getBody()->getContents());
-
-        foreach ($xml->ValType[1]->Valute as $currency) {
-            $this->rates[$this->date][(string) $currency->attributes()['Code']] = [
-                'rate'    => (float) $currency->Value,
-                'nominal' => (int) $currency->Nominal,
-            ];
-        }
-    }
-
-    /**
      * Gets currency rate.
      *
      * @param string $currency
      *
-     * @throws CurrencyException
-     *
      * @return mixed
+     * @throws DateException
+     * @throws CurrencyException
      */
     public function __get(string $currency)
     {
@@ -205,11 +181,11 @@ class CBAR
      * Converts currency with given amount.
      *
      * @param string $currency
-     * @param array  $arguments
-     *
-     * @throws CurrencyException
+     * @param array $arguments
      *
      * @return float|int
+     * @throws DateException
+     * @throws CurrencyException
      */
     public function __call(string $currency, array $arguments)
     {
@@ -239,6 +215,29 @@ class CBAR
     }
 
     /**
+     * Fetches currency rates from CBAR with given date.
+     * @throws DateException
+     */
+    private function getRatesFromCBAR()
+    {
+        if (!$validatedDate = strtotime($this->date)) {
+            throw new DateException($this->date.' is not a valid date.');
+        }
+        $this->date = date('d.m.Y', $validatedDate);
+
+        $response = $this->client->get('https://www.cbar.az/currencies/'.$this->date.'.xml');
+
+        $xml = simplexml_load_string($response->getBody()->getContents());
+
+        foreach ($xml->ValType[1]->Valute as $currency) {
+            $this->rates[$this->date][(string) $currency->attributes()['Code']] = [
+                'rate'    => (float) $currency->Value,
+                'nominal' => (int) $currency->Nominal,
+            ];
+        }
+    }
+
+    /**
      * @param Client $client
      */
     public function setClient(Client $client): void
@@ -264,23 +263,5 @@ class CBAR
     public function getRates(): array
     {
         return $this->rates;
-    }
-
-    /**
-     * @param string $date
-     *
-     * @throws DateException
-     *
-     * @return CBAR
-     */
-    public function setDate(string $date): self
-    {
-        if (!$validatedDate = strtotime($date)) {
-            throw new DateException($date.' is not a valid date.');
-        }
-
-        $this->date = date('d.m.Y', $validatedDate);
-
-        return $this;
     }
 }

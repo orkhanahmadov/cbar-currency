@@ -33,7 +33,7 @@ class CBARTest extends TestCase
         $this->expectException(DateException::class);
         $this->expectExceptionMessage($date.' is not a valid date.');
 
-        new CBAR($date);
+        (new CBAR($date))->EUR;
     }
 
     /**
