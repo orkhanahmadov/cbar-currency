@@ -1,4 +1,4 @@
-## :dollar: PHP library to get currency rates from [CBAR](https://www.cbar.az)
+## :dollar: PHP library to work with [CBAR](https://www.cbar.az/home?language=en) currency rates
 
 [![Build Status](https://travis-ci.org/orkhanahmadov/cbar-currency.svg?branch=master)](https://travis-ci.org/orkhanahmadov/cbar-currency)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/d5cf2c42b3f6febb6a29/test_coverage)](https://codeclimate.com/github/orkhanahmadov/cbar-currency/test_coverage)
@@ -50,7 +50,7 @@ $cbar->USD; // returns USD rate for 25.04.2019
 ```
 
 You can pass dates in any format that acceptable by PHP's ``strtotime()`` function.
-For example, ``20.10.2019``, ``10/20/2019``, ``2019-10-20``, ``today``, ``yesterday``, ``-1 week``, ``-1 year``.
+For example, ``20.10.2019``, ``10/20/2019``, ``2019-10-20``, ``today``, ``yesterday``, ``-1 week``, ``-1 year``, ``10 September 2015``, ``last Monday``.
 
 You can fetch rates multiple for dates with same class instance. Rates for each unique date will be called once, stored rates will be used for next same date calls:
 
@@ -68,17 +68,19 @@ $cbar = new CBAR();
 $cbar->for('yesterday')->EUR;
 ```
 
-#### Converting amount to/from AZN
+All available currencies and currency codes can be found in [CBAR website](https://www.cbar.az/currency/rates?language=en)
+
+#### Converting amount to and from AZN
 
 Library supports converting given amount in foreign currency to AZN with given date's rates:
 
 ```php
 $cbar = new CBAR();
-$cbar->USD(57.5); // return AZN equivalent of 57.5 USD with today's rates. ({USD rate for today} * 57.5)
-$cbar->for('01.05.2019')->USD(57.5); // returns AZN equivalent of 57.5 USD with 01.05.2019 rates. ({USD rate for 01.05.2019} * 57.5)
+$cbar->USD(57.5); // return AZN equivalent of 57.5 USD with today's rates
+$cbar->for('01.05.2019')->USD(57.5); // returns AZN equivalent of 57.5 USD with 01.05.2019 rates
 ```
 
-You can also convert given amount in AZN to foreign currency:
+You can also convert given amount in AZN to any available foreign currency:
 
 ```php
 $cbar = new CBAR();
