@@ -4,7 +4,7 @@ use Orkhanahmadov\CBARCurrency\CBAR;
 
 if (!function_exists('cbar')) {
     /**
-     * Helper function
+     * Helper function.
      *
      * @param string|null $date
      *
