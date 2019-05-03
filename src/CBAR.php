@@ -134,8 +134,9 @@ class CBAR
      *
      * @param string $date
      *
-     * @return $this
      * @throws DateException
+     *
+     * @return $this
      */
     public function for(string $date)
     {
@@ -153,9 +154,10 @@ class CBAR
      *
      * @param string $currency
      *
-     * @return mixed
      * @throws DateException
      * @throws CurrencyException
+     *
+     * @return mixed
      */
     public function __get(string $currency)
     {
@@ -181,11 +183,12 @@ class CBAR
      * Converts currency with given amount.
      *
      * @param string $currency
-     * @param array $arguments
+     * @param array  $arguments
      *
-     * @return float|int
      * @throws DateException
      * @throws CurrencyException
+     *
+     * @return float|int
      */
     public function __call(string $currency, array $arguments)
     {
@@ -216,6 +219,7 @@ class CBAR
 
     /**
      * Fetches currency rates from CBAR with given date.
+     *
      * @throws DateException
      */
     private function getRatesFromCBAR()
