@@ -10,6 +10,10 @@
 [![Total Downloads](https://poser.pugx.org/orkhanahmadov/cbar-currency/downloads)](https://packagist.org/packages/orkhanahmadov/cbar-currency)
 [![License](https://poser.pugx.org/orkhanahmadov/cbar-currency/license)](https://packagist.org/packages/orkhanahmadov/cbar-currency)
 
+<p align="center">
+<img src="https://raw.githubusercontent.com/orkhanahmadov/cbar-currency/master/code-screenshot.png" />
+</p>
+
 ### Requirements
 
 **PHP 7.2** or higher, ``simplexml`` and ``bcmath`` extensions.
@@ -70,17 +74,17 @@ Library supports converting given amount in foreign currency to AZN with given d
 
 ```php
 $cbar = new CBAR();
-$cbar->USD(57.5); // this will return AZN equivalent of 57.5 USD with today's rates. ({USD rate for today} * 57.5)
-$cbar->for('01.05.2019')->USD(57.5); // this will return AZN equivalent of 57.5 USD with 01.05.2019 rates. ({USD rate for 01.05.2019} * 57.5)
+$cbar->USD(57.5); // return AZN equivalent of 57.5 USD with today's rates. ({USD rate for today} * 57.5)
+$cbar->for('01.05.2019')->USD(57.5); // returns AZN equivalent of 57.5 USD with 01.05.2019 rates. ({USD rate for 01.05.2019} * 57.5)
 ```
 
 You can also convert given amount in AZN to foreign currency:
 
 ```php
 $cbar = new CBAR();
-$cbar->AZN()->USD; // this will return USD equivalent of 1 AZN with today's rates
-$cbar->AZN(55)->USD; // this will return USD equivalent of 55 AZN with today's rates
-$cbar->for('01.05.2019')->AZN(17.3)->USD; // this will return USD equivalent of 17.3 AZN with 01.05.2019 rates
+$cbar->AZN()->USD; // returns USD equivalent of 1 AZN with today's rates
+$cbar->AZN(55)->USD; // returns USD equivalent of 55 AZN with today's rates
+$cbar->for('01.05.2019')->AZN(17.3)->USD; // returns USD equivalent of 17.3 AZN with 01.05.2019 rates
 ```
 
 #### Helper function
