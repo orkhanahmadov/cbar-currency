@@ -28,7 +28,7 @@ composer require orkhanahmadov/cbar-currency
 
 #### Fetching rates from CBAR
 
-Instantiate ``Orkhanahmadov\CBARCurrency\CBAR`` with date you want to fetch rates for. If you won't pass a date, current date will be used:
+Instantiate ``Orkhanahmadov\CBARCurrency\CBAR`` with date you want to fetch rates for. If you don't pass a date, current date will be used:
 
 ```php
 use Orkhanahmadov\CBARCurrency\CBAR;
@@ -37,12 +37,13 @@ $cbar = new CBAR(); // this will fetch rates for current date
 $cbar = new CBAR('01.05.2019'); // this will fetch rates for 01.05.2019
 ```
 
-You can access currency rate as class property with uppercase currency codes:
+You can get currency rate by accessing it with with uppercase currency code:
+
 ```php
 $cbar->EUR; // returns EUR rate
 ```
 
-You can change date for a new date by calling ``for()`` method without re-instantiating class:
+You can change date for a new date by calling ``for()`` method without instantiating new class:
 
 ```php
 $cbar->for('25.04.2019'); // this will fetch rates for 25.04.2019
@@ -50,15 +51,17 @@ $cbar->USD; // returns USD rate for 25.04.2019
 ```
 
 You can pass dates in any format that acceptable by PHP's ``strtotime()`` function.
-For example, ``20.10.2019``, ``10/20/2019``, ``2019-10-20``, ``today``, ``yesterday``, ``-1 week``, ``-1 year``, ``10 September 2015``, ``last Monday``.
+For example, ``20.10.2019``, ``10/20/2019``, ``2019-10-20``, ``today``, ``yesterday``, ``-1 week``, ``-1 year``, ``15 December 2015``, ``last Friday``.
 
-You can fetch rates multiple for dates with same class instance. Rates for each unique date will be called once, stored rates will be used for next same date calls:
+You can fetch currency rates for multiple dates with same class instance.
+Class instance fetches rates for each unique date only once and stores results for each date.
+If you set date to previously fetched date, stored rates will be used.
 
 ```php
 $cbar = new CBAR();
-$cbar->for('20.04.2019'); // this will fetch rates from CBAR
-$cbar->for('23.04.2019'); // this will also fetch rates from CBAR
-$cbar->for('20.04.2019'); // since rates for 20.04.2019 fetched previously, this won't fetch anything from CBAR, will use stored rates
+$cbar->for('20.04.2019'); // this will fetch rates from CBAR API
+$cbar->for('23.04.2019'); // this will also fetch rates from CBAR API
+$cbar->for('20.04.2019'); // since rates for 20.04.2019 fetched previously stored rates will be used instead of fetching rates for same day again
 ```
 
 You can chain methods with fluent API syntax:
@@ -76,33 +79,32 @@ Library supports converting given amount in foreign currency to AZN with given d
 
 ```php
 $cbar = new CBAR();
-$cbar->USD(57.5); // return AZN equivalent of 57.5 USD with today's rates
-$cbar->for('01.05.2019')->USD(57.5); // returns AZN equivalent of 57.5 USD with 01.05.2019 rates
+$cbar->USD(13); // returns AZN equivalent of 13.00 USD with today's rates
+$cbar->for('01.05.2019')->USD(57.5); // returns AZN equivalent of 57.50 USD with 01.05.2019 rates
 ```
 
 You can also convert given amount in AZN to any available foreign currency:
 
 ```php
 $cbar = new CBAR();
-$cbar->AZN()->USD; // returns USD equivalent of 1 AZN with today's rates
-$cbar->AZN(55)->USD; // returns USD equivalent of 55 AZN with today's rates
-$cbar->for('01.05.2019')->AZN(17.3)->USD; // returns USD equivalent of 17.3 AZN with 01.05.2019 rates
+$cbar->AZN()->USD; // returns USD equivalent of 1.00 AZN with today's rates
+$cbar->AZN(55)->USD; // returns USD equivalent of 55.00 AZN with today's rates
+$cbar->for('01.05.2019')->AZN(17.3)->USD; // returns USD equivalent of 17.30 AZN with 01.05.2019 rates
 ```
 
 #### Helper function
 
-Library ships with global helper function you can use:
+Library ships with global helper function. You can use it like:
 
 ```php
 cbar()->USD // returns USD rate for today
 cbar('01.05.2019')->USD; // returns USD rate for 01.05.2019
 cbar()->for('01.05.2019')->EUR; // same as above
-cbar()->USD(27.3); // returns 27.3 USD to AZN conversion
-cbar()->AZN(15.8)->EUR; // returns 15.8 USD to EUR conversion
+cbar()->USD(27); // returns 27.00 USD to AZN conversion
+cbar()->AZN(15.8)->EUR; // returns 15.80 AZN to EUR conversion
 ```
 
-**Important!** ``cbar()`` global function always returns new instance of ``Orkhanahmadov\CBARCurrency\CBAR`` class.
-Passing same date to multiple ``cbar()`` functions will always fetch rates from CBAR, unlike using same instance of the class.
+**Note:** Calling ``cbar()`` global function always returns new instance of ``Orkhanahmadov\CBARCurrency\CBAR`` class.
 
 ### Testing
 You can run the tests with:

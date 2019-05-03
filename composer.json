@@ -1,6 +1,6 @@
 {
     "name": "orkhanahmadov/cbar-currency",
-    "description": "CBAR.az currency library for PHP and Laravel framework",
+    "description": "PHP library to work with cbar.az currency rates",
     "type": "library",
     "license": "MIT",
     "authors": [
