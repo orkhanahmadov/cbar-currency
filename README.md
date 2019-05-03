@@ -11,7 +11,7 @@
 [![License](https://poser.pugx.org/orkhanahmadov/cbar-currency/license)](https://packagist.org/packages/orkhanahmadov/cbar-currency)
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/orkhanahmadov/cbar-currency/master/code-screenshot.png" />
+<img src="https://raw.githubusercontent.com/orkhanahmadov/cbar-currency/master/screenshot.png" />
 </p>
 
 ### Requirements
