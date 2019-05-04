@@ -16,7 +16,8 @@
         "ext-bcmath": "*"
     },
     "require-dev": {
-        "blastcloud/guzzler": "^1.4"
+        "blastcloud/guzzler": "^1.4",
+        "phpunit/phpunit": "^8.1"
     },
     "autoload": {
         "psr-4": {
