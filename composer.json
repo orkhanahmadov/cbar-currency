@@ -1,23 +1,31 @@
 {
     "name": "orkhanahmadov/cbar-currency",
     "description": "PHP library to work with cbar.az currency rates",
-    "type": "library",
+    "keywords": [
+        "cbar",
+        "azerbaijan",
+        "azn",
+        "currency"
+    ],
+    "homepage": "https://github.com/orkhanahmadov/cbar-currency",
     "license": "MIT",
+    "type": "library",
     "authors": [
         {
             "name": "Orkhan Ahmadov",
-            "email": "ahmadov90@gmail.com"
+            "email": "ahmadov90@gmail.com",
+            "role": "Developer"
         }
     ],
     "require": {
-        "php": ">=7.2.0",
-        "guzzlehttp/guzzle": "^6.3",
+        "php": ">=7.1.0",
         "ext-simplexml": "*",
-        "ext-bcmath": "*"
+        "ext-bcmath": "*",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "require-dev": {
         "blastcloud/guzzler": "^1.4",
-        "phpunit/phpunit": "^8.1"
+        "phpunit/phpunit": "^6.0|^7.0|^8.0"
     },
     "autoload": {
         "psr-4": {
@@ -32,11 +40,11 @@
             "Orkhanahmadov\\CBARCurrency\\Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
     "config": {
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "optimize-autoloader": true
+        "sort-packages": true
     }
 }

@@ -1,4 +1,4 @@
-## :dollar: PHP library to work with [CBAR](https://www.cbar.az/home?language=en) currency rates
+# :dollar: PHP library to work with [CBAR](https://www.cbar.az/home?language=en) currency rates
 
 [![Build Status](https://travis-ci.org/orkhanahmadov/cbar-currency.svg?branch=master)](https://travis-ci.org/orkhanahmadov/cbar-currency)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/d5cf2c42b3f6febb6a29/test_coverage)](https://codeclimate.com/github/orkhanahmadov/cbar-currency/test_coverage)
@@ -14,19 +14,19 @@
 <img src="https://raw.githubusercontent.com/orkhanahmadov/cbar-currency/master/screenshot.png" />
 </p>
 
-### Requirements
+## Requirements
 
-**PHP 7.2** or higher, ``simplexml`` and ``bcmath`` extensions.
+**PHP 7.1** or higher, ``simplexml`` and ``bcmath`` extensions.
 
-### Installation
+## Installation
 
 ```bash
 composer require orkhanahmadov/cbar-currency
 ```
 
-### Usage
+## Usage
 
-#### Fetching rates from CBAR
+### Fetching rates from CBAR
 
 Instantiate ``Orkhanahmadov\CBARCurrency\CBAR`` with date you want to fetch rates for. If you don't pass a date, current date will be used:
 
@@ -73,7 +73,7 @@ $cbar->for('yesterday')->EUR;
 
 All available currencies and currency codes can be found in [CBAR website](https://www.cbar.az/currency/rates?language=en)
 
-#### Converting amount to and from AZN
+### Converting amount to and from AZN
 
 Library supports converting given amount in foreign currency to AZN with given date's rates:
 
@@ -92,7 +92,7 @@ $cbar->AZN(55)->USD; // returns USD equivalent of 55.00 AZN with today's rates
 $cbar->for('01.05.2019')->AZN(17.3)->USD; // returns USD equivalent of 17.30 AZN with 01.05.2019 rates
 ```
 
-#### Helper function
+### Helper function
 
 Library ships with global helper function. You can use it like:
 
@@ -106,18 +106,29 @@ cbar()->AZN(15.8)->EUR; // returns 15.80 AZN to EUR conversion
 
 **Note:** Calling ``cbar()`` global function always returns new instance of ``Orkhanahmadov\CBARCurrency\CBAR`` class.
 
-### Testing
-You can run the tests with:
+## Testing
 
-```bash
-vendor/bin/phpunit
+``` bash
+composer test
 ```
 
-### Changelog
-Please see [CHANGELOG](https://github.com/orkhanahmadov/cbar-currency/blob/master/CHANGELOG.md) for more information what has changed recently.
+## Changelog
 
-### Contributing
-Please see [CONTRIBUTING](https://github.com/orkhanahmadov/cbar-currency/blob/master/CONTRIBUTING.md) for details.
+Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
-### License
-The MIT License (MIT). Please see [License file](https://github.com/orkhanahmadov/cbar-currency/blob/master/LICENSE.md) for more information.
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+## Security
+
+If you discover any security related issues, please email ahmadov90@gmail.com instead of using the issue tracker.
+
+## Credits
+
+- [Orkhan Ahmadov](https://github.com/orkhanahmadov)
+- [All Contributors](../../contributors)
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
