@@ -3,8 +3,8 @@
 namespace Orkhanahmadov\CBARCurrency;
 
 use GuzzleHttp\Client;
-use Orkhanahmadov\CBARCurrency\Exceptions\CurrencyException;
 use Orkhanahmadov\CBARCurrency\Exceptions\DateException;
+use Orkhanahmadov\CBARCurrency\Exceptions\CurrencyException;
 
 /**
  * @property float|int USD
@@ -142,7 +142,7 @@ class CBAR
     {
         $this->date = $date;
 
-        if (!isset($this->rates[$this->date])) {
+        if (! isset($this->rates[$this->date])) {
             $this->getRatesFromCBAR();
         }
 
@@ -161,11 +161,11 @@ class CBAR
      */
     public function __get(string $currency)
     {
-        if (!isset($this->rates[$this->date])) {
+        if (! isset($this->rates[$this->date])) {
             $this->getRatesFromCBAR();
         }
 
-        if (!isset($this->rates[$this->date][$currency])) {
+        if (! isset($this->rates[$this->date][$currency])) {
             throw new CurrencyException('Currency with '.$currency.' code is not available');
         }
 
@@ -192,11 +192,11 @@ class CBAR
      */
     public function __call(string $currency, array $arguments)
     {
-        if (!isset($this->rates[$this->date])) {
+        if (! isset($this->rates[$this->date])) {
             $this->getRatesFromCBAR();
         }
 
-        if (!isset($this->rates[$this->date][$currency])) {
+        if (! isset($this->rates[$this->date][$currency])) {
             throw new CurrencyException('Currency with '.$currency.' code is not available');
         }
 
@@ -224,7 +224,7 @@ class CBAR
      */
     private function getRatesFromCBAR()
     {
-        if (!$validatedDate = strtotime($this->date)) {
+        if (! $validatedDate = strtotime($this->date)) {
             throw new DateException($this->date.' is not a valid date.');
         }
         $this->date = date('d.m.Y', $validatedDate);

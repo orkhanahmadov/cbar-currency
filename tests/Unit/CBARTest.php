@@ -2,12 +2,12 @@
 
 namespace Orkhanahmadov\CBARCurrency\Tests\Unit;
 
-use BlastCloud\Guzzler\UsesGuzzler;
 use GuzzleHttp\Psr7\Response;
+use BlastCloud\Guzzler\UsesGuzzler;
 use Orkhanahmadov\CBARCurrency\CBAR;
-use Orkhanahmadov\CBARCurrency\Exceptions\CurrencyException;
-use Orkhanahmadov\CBARCurrency\Exceptions\DateException;
 use Orkhanahmadov\CBARCurrency\Tests\TestCase;
+use Orkhanahmadov\CBARCurrency\Exceptions\DateException;
+use Orkhanahmadov\CBARCurrency\Exceptions\CurrencyException;
 
 class CBARTest extends TestCase
 {
