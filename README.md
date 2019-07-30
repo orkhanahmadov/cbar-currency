@@ -1,14 +1,15 @@
 # :dollar: PHP library to work with [CBAR](https://www.cbar.az/home?language=en) currency rates
 
-[![Build Status](https://travis-ci.org/orkhanahmadov/cbar-currency.svg?branch=master)](https://travis-ci.org/orkhanahmadov/cbar-currency)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/d5cf2c42b3f6febb6a29/test_coverage)](https://codeclimate.com/github/orkhanahmadov/cbar-currency/test_coverage)
-[![Maintainability](https://api.codeclimate.com/v1/badges/d5cf2c42b3f6febb6a29/maintainability)](https://codeclimate.com/github/orkhanahmadov/cbar-currency/maintainability)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/orkhanahmadov/cbar-currency/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/orkhanahmadov/cbar-currency/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/orkhanahmadov/cbar-currency/v/stable)](https://packagist.org/packages/orkhanahmadov/cbar-currency)
+[![Latest Unstable Version](https://poser.pugx.org/orkhanahmadov/cbar-currency/v/unstable)](https://packagist.org/packages/orkhanahmadov/cbar-currency)
+[![GitHub license](https://img.shields.io/github/license/orkhanahmadov/cbar-currency.svg)](https://github.com/orkhanahmadov/cbar-currency/blob/master/LICENSE.md)
+
+[![Build Status](https://img.shields.io/travis/orkhanahmadov/cbar-currency.svg)](https://travis-ci.org/orkhanahmadov/cbar-currency)
+[![Test Coverage](https://img.shields.io/codeclimate/coverage/orkhanahmadov/cbar-currency.svg)](https://codeclimate.com/github/orkhanahmadov/cbar-currency/test_coverage)
+[![Maintainability](https://img.shields.io/codeclimate/maintainability/orkhanahmadov/cbar-currency.svg)](https://codeclimate.com/github/orkhanahmadov/cbar-currency/maintainability)
+[![Quality Score](https://img.shields.io/scrutinizer/g/orkhanahmadov/cbar-currency.svg)](https://scrutinizer-ci.com/g/orkhanahmadov/cbar-currency)
 [![StyleCI](https://github.styleci.io/repos/184592322/shield?branch=master)](https://github.styleci.io/repos/184592322)
 
-[![Latest Stable Version](https://poser.pugx.org/orkhanahmadov/cbar-currency/version)](https://packagist.org/packages/orkhanahmadov/cbar-currency)
-[![Total Downloads](https://poser.pugx.org/orkhanahmadov/cbar-currency/downloads)](https://packagist.org/packages/orkhanahmadov/cbar-currency)
-[![License](https://poser.pugx.org/orkhanahmadov/cbar-currency/license)](https://packagist.org/packages/orkhanahmadov/cbar-currency)
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/orkhanahmadov/cbar-currency/master/screenshot.png" />
