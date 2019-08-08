@@ -2,7 +2,7 @@
 
 use Orkhanahmadov\CBARCurrency\CBAR;
 
-if (!function_exists('cbar')) {
+if (! function_exists('cbar')) {
     /**
      * Helper function.
      *
