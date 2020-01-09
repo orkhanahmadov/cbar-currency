@@ -18,7 +18,7 @@
 
 ## Requirements
 
-**PHP 7.1** or higher, ``simplexml`` and ``bcmath`` extensions.
+**PHP 7.2** or higher, ``simplexml`` and ``bcmath`` extensions.
 
 ## Installation
 
