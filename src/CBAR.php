@@ -200,7 +200,7 @@ class CBAR
             throw new CurrencyException('Currency with '.$currency.' code is not available');
         }
 
-        return $this->$currency * $arguments[0];
+        return $this->$currency * ($arguments[0] ?? 1);
     }
 
     /**
