@@ -166,7 +166,7 @@ class CBAR
         }
 
         if (! isset($this->rates[$this->date][$currency])) {
-            throw new CurrencyException('Currency with '.$currency.' code is not available');
+            throw new CurrencyException('Currency with ' . $currency . ' code is not available');
         }
 
         if ($this->aznAmount) {
@@ -197,7 +197,7 @@ class CBAR
         }
 
         if (! isset($this->rates[$this->date][$currency])) {
-            throw new CurrencyException('Currency with '.$currency.' code is not available');
+            throw new CurrencyException('Currency with ' . $currency . ' code is not available');
         }
 
         return $this->$currency * ($arguments[0] ?? 1);
@@ -225,11 +225,11 @@ class CBAR
     private function getRatesFromCBAR()
     {
         if (! $validatedDate = strtotime($this->date)) {
-            throw new DateException($this->date.' is not a valid date.');
+            throw new DateException($this->date . ' is not a valid date.');
         }
         $this->date = date('d.m.Y', $validatedDate);
 
-        $response = $this->client->get('https://www.cbar.az/currencies/'.$this->date.'.xml');
+        $response = $this->client->get('https://www.cbar.az/currencies/' . $this->date . '.xml');
 
         $xml = simplexml_load_string($response->getBody()->getContents());
 
