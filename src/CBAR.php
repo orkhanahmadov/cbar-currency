@@ -237,6 +237,7 @@ class CBAR
             $this->rates[$this->date][(string) $currency->attributes()['Code']] = [
                 'rate'    => (float) $currency->Value,
                 'nominal' => (int) $currency->Nominal,
+                'name' => (string) $currency->Name,
             ];
         }
     }
