@@ -188,5 +188,4 @@ class CBARTest extends TestCase
         $rates = $cbar->for('01.05.2019')->getRates()['01.05.2019'];
         $this->assertEquals("1 ABŞ dolları", $rates["USD"]["name"]);
     }
-
 }
