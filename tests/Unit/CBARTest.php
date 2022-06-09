@@ -182,7 +182,8 @@ class CBARTest extends TestCase
         $this->assertEquals(5, $cbar->AZN(10)->EUR);
     }
 
-    public function test_method_returns_name_in_body(){
+    public function test_method_returns_name_in_body()
+    {
         $cbar = new CBAR();
         $rates = $cbar->for('01.05.2019')->getRates()['01.05.2019'];
         $this->assertEquals("1 ABŞ dolları", $rates["USD"]["name"]);
