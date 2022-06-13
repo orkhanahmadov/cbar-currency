@@ -1,0 +1,33 @@
+name: PHPStan
+
+on:
+    push:
+      paths:
+          - '**.php'
+          - 'phpstan.neon'
+    pull_request:
+        paths:
+          - '**.php'
+          - 'phpstan.neon'
+
+jobs:
+    phpstan:
+        name: Static analysis
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+            - name: Cache Composer dependencies
+              uses: actions/cache@v1
+              with:
+                  path: vendor
+                  key: composer-${{ hashFiles('composer.lock') }}
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 8.1
+                  coverage: none
+            - name: Install Composer dependencies
+              run: composer install --ignore-platform-reqs --no-scripts
+            - name: Run phpstan
+              run: ./vendor/bin/phpstan analyse --error-format=github
