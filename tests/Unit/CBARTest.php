@@ -85,7 +85,8 @@ class CBARTest extends TestCase
             '01.05.2019' => [
                 'USD' => [
                     'nominal' => 1,
-                    'rate'    => 1.7053,
+                    'name' => '1 ABŞ dolları',
+                    'rate' => 1.7053,
                 ],
             ],
         ]);
@@ -102,7 +103,8 @@ class CBARTest extends TestCase
             '01.05.2019' => [
                 'USD' => [
                     'nominal' => 1,
-                    'rate'    => 1.7053,
+                    'name' => '1 ABŞ dolları',
+                    'rate' => 1.7053,
                 ],
             ],
         ]);
@@ -147,7 +149,8 @@ class CBARTest extends TestCase
             '01.05.2019' => [
                 'USD' => [
                     'nominal' => 1,
-                    'rate'    => 1.7053,
+                    'name' => '1 ABŞ dolları',
+                    'rate' => 1.7053,
                 ],
             ],
         ]);
@@ -175,12 +178,20 @@ class CBARTest extends TestCase
             '01.05.2019' => [
                 'EUR' => [
                     'nominal' => 1,
-                    'rate'    => 2,
+                    'name' => '1 ABŞ dolları',
+                    'rate' => 2,
                 ],
             ],
         ]);
 
         $this->assertEquals(0.5, $cbar->AZN()->EUR);
         $this->assertEquals(5, $cbar->AZN(10)->EUR);
+    }
+
+    public function test_method_returns_name_in_body()
+    {
+        $cbar = new CBAR();
+        $rates = $cbar->for('01.05.2019')->getRates()['01.05.2019'];
+        $this->assertEquals("1 ABŞ dolları", $rates["USD"]["name"]);
     }
 }
