@@ -127,11 +127,18 @@ class CBARTest extends TestCase
 
     public function test_magic_set_method_returns_calculated_amount()
     {
-        // why get method was not used to retrieve the data?
-        // Here is an example.
         $cbar = new CBAR('01.05.2019');
-        $cbar->getRates();
-        $this->assertEquals(170.0, $cbar->USD(100));
+        $cbar->setRates([
+            '01.05.2019' => [
+                'USD' => [
+                    'nominal' => 1,
+                    'rate'    => 1.7053,
+                ],
+            ],
+        ]);
+
+        $this->assertEquals(170.53, $cbar->USD(100));
+
     }
 
     public function test_magic_set_method_throws_exception_if_currency_is_not_available()
