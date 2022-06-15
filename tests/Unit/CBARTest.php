@@ -138,7 +138,6 @@ class CBARTest extends TestCase
         ]);
 
         $this->assertEquals(170.53, $cbar->USD(100));
-
     }
 
     public function test_magic_set_method_throws_exception_if_currency_is_not_available()
